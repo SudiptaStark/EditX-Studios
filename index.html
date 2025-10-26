@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT X STUDIOS - Creative Solutions</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
+    <style>
+        /* Custom Variables and Base Styles (Reflecting Image Theme) */
+        :root {
+            --primary-bg: #121212;
+            /* Deep Charcoal/Black */
+            --secondary-bg: #1e1e1e;
+            --card-bg: #2a2a2a;
+            --accent-main: #F74A8E;
+            /* Hot Pink/Magenta */
+            --accent-secondary: #FFC000;
+            /* Warm Gold/Yellow */
+            --text-light: #e0e0e0;
+            --text-dark: #222222;
+            --bg-color: #0d0d1a;
+            /* --highlight-color: #6a5acd; */
+            /* A soft purple for accents */
+            --hover-color: #8c7aea;
+
+            --footer-bg-color: #1a1a1a;
+            /* Dark background */
+            --footer-text-color: #cccccc;
+            /* Light gray text */
+            --footer-link-color: #ffffff;
+            /* White links */
+            --accent-color: #007bff;
+            /* A blue accent for hover/active */
+        }
+
+        img {
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* --- DARK MODE (Default/Initial State) --- */
+        body.dark-mode {
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            transition: all 0.5s ease;
+        }
+
+        /* Navbar in Dark Mode */
+        .navbar.dark-mode {
+            background: rgba(18, 18, 18, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: none;
+        }
+
+        .navbar.dark-mode.scrolled {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Card/Content in Dark Mode */
+        .card-base {
+            background-color: var(--secondary-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Contact Form Input Styling for Dark Mode */
+        .contact-input-dark {
+            /* Use primary dark background for contrast inside the card */
+            background-color: var(--primary-bg);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-light);
+        }
+
+        .contact-input-dark:focus {
+            border-color: var(--accent-secondary);
+            /* Focus color is Gold */
+            box-shadow: 0 0 0 1px var(--accent-secondary);
+        }
+
+
+        /* --- LIGHT MODE --- */
+        body.light-mode {
+            background-color: #f7f7f7;
+            color: var(--text-dark);
+            transition: all 0.5s ease;
+        }
+
+        /* Navbar in Light Mode */
+        .navbar.light-mode {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: none;
+        }
+
+        .navbar.light-mode.scrolled {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Card/Content in Light Mode */
+        body.light-mode .card-base {
+            background-color: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        /* Contact Form Input Styling for Light Mode */
+        body.light-mode .contact-input-light {
+            background-color: #fcfcfc;
+            border-color: rgba(0, 0, 0, 0.1);
+            color: var(--text-dark);
+        }
+
+        body.light-mode .contact-input-light:focus {
+            border-color: var(--accent-secondary);
+            /* Focus color is Gold */
+            box-shadow: 0 0 0 1px var(--accent-secondary);
+        }
+
+        /* --- General Styles --- */
+        section {
+            padding-top: 5rem;
+            min-height: 80vh;
+        }
+
+        /* Hero Gradient Text (uses both accents) */
+        .hero-gradient-text {
+            background: linear-gradient(90deg, var(--accent-main), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated Gradient for Heading */
+        .animated-gradient {
+            background: linear-gradient(90deg, var(--accent-main), var(--accent-secondary), var(--accent-main));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 4s linear infinite;
+        }
+
+
+        /* Grid and Card Styling */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            height: 350px;
+            /* Set a fixed height for visual consistency */
+            transition:
+                opacity 0.4s ease-in-out,
+                transform 0.4s ease-in-out,
+                margin 0.4s ease-in-out,
+                height 0.4s ease-in-out;
+        }
+
+        /* YouTube Embed Styling */
+        .project-card iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70%;
+            /* Iframe takes up the top part of the card */
+            border-radius: 12px 12px 0 0;
+        }
+
+        /* Card Info Styling */
+        .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 15px;
+            width: 100%;
+            height: 30%;
+            /* Info takes up the bottom part of the card */
+            background: rgba(26, 26, 46, 0.8);
+            /* Slightly opaque background */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .card-info h3 {
+            font-size: 1.1em;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .card-info p {
+            font-size: 0.85em;
+            color: #a0a0c0;
+            margin-bottom: 10px;
+        }
+
+        /* Category Tag Styling */
+        .category-tag {
+            background-color: var(--highlight-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7em;
+            font-weight: bold;
+            align-self: flex-start;
+            /* Aligns tag to the left */
+        }
+
+
+        /* HIDDEN CARD STATE (JavaScript will apply this class) */
+        .project-card.hidden {
+            opacity: 0;
+            transform: scale(0.9);
+            height: 0;
+            margin: 0;
+            padding: 0;
+            /* We don't use display: none immediately to allow the transition to happen */
+        }
+
+        .social {
+            position: fixed;
+            top: 50%;
+            right: 0px;
+            transform: translateY(-50%);
+        }
+
+        .social a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            margin: 8px;
+            padding: 0px;
+            line-height: 0px;
+            background-color: var(--accent-secondary);
+            border: 1px solid #CBCBCB;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2);
+            transition: all ease 0.5s;
+        }
+
+        .social a:hover {
+            background-color: var(--accent-main);
+        }
+
+        .social i {
+            font-size: 15px;
+            color: #2B2B2B;
+        }
+
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* --- Marquee Animation for Tech Stack --- */
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll-left {
+            animation: scroll-left 30s linear infinite;
+        }
+
+        /* --- Footer General Styling --- */
+        .site-footer {
+            background-color: var(--footer-bg-color);
+            color: var(--footer-text-color);
+            padding: 50px 20px 0;
+            /* Top padding and side padding */
+            font-family: Arial, sans-serif;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            /* Space out the columns */
+            max-width: 1200px;
+            /* Adjust as needed */
+            margin: 0 auto;
+            padding-bottom: 30px;
+            /* Space above the copyright bar */
+            flex-wrap: wrap;
+            /* Allow wrapping on smaller screens */
+        }
+
+        .footer-col {
+            width: 22%;
+            /* Approx. equal width for 4 columns */
+            margin-bottom: 30px;
+        }
+
+        /* Adjust the brand/logo column to be slightly wider if needed */
+        .brand-col {
+            width: 28%;
+        }
+
+
+        /* --- Headings and Links --- */
+        .footer-heading {
+            color: var(--footer-link-color);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a,
+        .footer-contact-info a {
+            color: var(--footer-text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover,
+        .footer-contact-info a:hover {
+            color: var(--accent-color);
+        }
+
+
+        /* --- Brand/Description Column --- */
+        .footer-logo {
+            color: var(--footer-link-color);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer-description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* --- Social Media Icons --- */
+        .social-links a {
+            display: inline-block;
+            color: var(--footer-link-color);
+            font-size: 18px;
+            margin-right: 15px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- Contact Info --- */
+        .footer-contact-info p {
+            margin-bottom: 10px;
+        }
+
+
+        /* --- Copyright Bar --- */
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            /* Separator line */
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+
+        /* Uiverse Theme Switch CSS (Adjusted for class consistency) */
+        .theme-switch {
+            --toggle-size: 12px;
+            /* Significantly reduced size for better fit in the navbar */
+            --container-width: 5.625em;
+            --container-height: 2.5em;
+            --container-radius: 6.25em;
+            --container-light-bg: #3D7EAE;
+            --container-night-bg: #1D1F2C;
+            --circle-container-diameter: 3.375em;
+            --sun-moon-diameter: 2.125em;
+            --sun-bg: #ECCA2F;
+            --moon-bg: #C4C9D1;
+            --spot-color: #959DB1;
+            --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
+            --stars-color: #fff;
+            --clouds-color: #F3FDFF;
+            --back-clouds-color: #AACADF;
+            --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
+        }
+
+        .theme-switch,
+        .theme-switch *,
+        .theme-switch *::before,
+        .theme-switch *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-size: var(--toggle-size);
+        }
+
+        .theme-switch__container {
+            width: var(--container-width);
+            height: var(--container-height);
+            background-color: var(--container-light-bg);
+            border-radius: var(--container-radius);
+            overflow: hidden;
+            cursor: pointer;
+            -webkit-box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+            box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .theme-switch__container::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            inset: 0;
+            -webkit-box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+            box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
+            border-radius: var(--container-radius)
+        }
+
+        .theme-switch__checkbox {
+            display: none;
+        }
+
+        .theme-switch__circle-container {
+            width: var(--circle-container-diameter);
+            height: var(--circle-container-diameter);
+            background-color: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            left: var(--circle-container-offset);
+            top: var(--circle-container-offset);
+            border-radius: var(--container-radius);
+            -webkit-box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-transition: var(--circle-transition);
+            -o-transition: var(--circle-transition);
+            transition: var(--circle-transition);
+            pointer-events: none;
+        }
+
+        .theme-switch__sun-moon-container {
+            pointer-events: auto;
+            position: relative;
+            z-index: 2;
+            width: var(--sun-moon-diameter);
+            height: var(--sun-moon-diameter);
+            margin: auto;
+            border-radius: var(--container-radius);
+            background-color: var(--sun-bg);
+            -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
+            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
+            -webkit-filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+            filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
+            overflow: hidden;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+        }
+
+        .theme-switch__moon {
+            -webkit-transform: translateX(100%);
+            -ms-transform: translateX(100%);
+            transform: translateX(100%);
+            width: 100%;
+            height: 100%;
+            background-color: var(--moon-bg);
+            border-radius: inherit;
+            -webkit-box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
+            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .theme-switch__spot {
+            position: absolute;
+            top: 0.75em;
+            left: 0.312em;
+            width: 0.75em;
+            height: 0.75em;
+            border-radius: var(--container-radius);
+            background-color: var(--spot-color);
+            -webkit-box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+            box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
+        }
+
+        .theme-switch__spot:nth-of-type(2) {
+            width: 0.375em;
+            height: 0.375em;
+            top: 0.937em;
+            left: 1.375em;
+        }
+
+        .theme-switch__spot:nth-last-of-type(3) {
+            width: 0.25em;
+            height: 0.25em;
+            top: 0.312em;
+            left: 0.812em;
+        }
+
+        .theme-switch__clouds {
+            width: 1.25em;
+            height: 1.25em;
+            background-color: var(--clouds-color);
+            border-radius: var(--container-radius);
+            position: absolute;
+            bottom: -0.625em;
+            left: 0.312em;
+            -webkit-box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color);
+            box-shadow: 0.937em 0.312em var(--clouds-color), -0.312em -0.312em var(--back-clouds-color), 1.437em 0.375em var(--clouds-color), 0.5em -0.125em var(--back-clouds-color), 2.187em 0 var(--clouds-color), 1.25em -0.062em var(--back-clouds-color), 2.937em 0.312em var(--clouds-color), 2em -0.312em var(--back-clouds-color), 3.625em -0.062em var(--clouds-color), 2.625em 0em var(--back-clouds-color), 4.5em -0.312em var(--clouds-color), 3.375em -0.437em var(--back-clouds-color), 4.625em -1.75em 0 0.437em var(--clouds-color), 4em -0.625em var(--back-clouds-color), 4.125em -2.125em 0 0.437em var(--back-clouds-color);
+            -webkit-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            -o-transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+            transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
+        }
+
+        .theme-switch__stars-container {
+            position: absolute;
+            color: var(--stars-color);
+            top: -100%;
+            left: 0.312em;
+            width: 2.75em;
+            height: auto;
+            -webkit-transition: var(--transition);
+            -o-transition: var(--transition);
+            transition: var(--transition);
+        }
+
+        /* actions (CORRECTED SELECTORS to match HTML) */
+
+        .theme-switch_checkbox:checked+.theme-switch_container {
+            background-color: var(--container-night-bg);
+        }
+
+        .theme-switch_checkbox:checked+.theme-switchcontainer .theme-switch_circle-container {
+            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
+        }
+
+        .theme-switch_checkbox:checked+.theme-switchcontainer .theme-switch_circle-container:hover {
+            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.187em)
+        }
+
+        .theme-switch__circle-container:hover {
+            left: calc(var(--circle-container-offset) + 0.187em);
+        }
+
+        .theme-switch_checkbox:checked+.theme-switchcontainer .theme-switch_moon {
+            -webkit-transform: translate(0);
+            -ms-transform: translate(0);
+            transform: translate(0);
+        }
+
+        .theme-switch_checkbox:checked+.theme-switchcontainer .theme-switch_clouds {
+            bottom: -4.062em;
+        }
+
+        .theme-switch_checkbox:checked+.theme-switchcontainer .theme-switch_stars-container {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+        }
+
+        /* --- Responsive Adjustments (for tablets/mobiles) --- */
+        @media (max-width: 992px) {
+            .brand-col {
+                width: 100%;
+                /* Full width for logo on smaller screens */
+                text-align: center;
+            }
+
+            .footer-description,
+            .social-links {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .social-links {
+                margin-bottom: 30px;
+            }
+
+            .footer-col {
+                width: 45%;
+                /* Two columns per row */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-container {
+                flex-direction: column;
+                /* Stack all columns */
+                padding-bottom: 10px;
+            }
+
+            .footer-col {
+                width: 100%;
+                text-align: center;
+                /* Center text for single column view */
+            }
+
+            .footer-heading {
+                margin-top: 20px;
+            }
+
+            .footer-links {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+
+    <!-- Navbar -->
+    <nav
+        class="navbar fixed top-3 left-3 right-3 h-16 flex items-center justify-between px-6 rounded-xl z-50 transition-all duration-300 backdrop-blur-md">
+        <!-- Logo -->
+        <div class="text-2xl font-extrabold tracking-wider">
+            <span class="text-[#F74A8E]">EDIT X</span> <span class="text-[#FFC000]">STUDIOS</span>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <ul class="hidden md:flex items-center space-x-6 list-none m-0 p-0 font-medium">
+            <li><a href="#home" class="hover:text-[#FFC000] transition-colors duration-200">HOME</a></li>
+            <li><a href="#projects" class="hover:text-[#FFC000] transition-colors duration-200">PROJECTS</a></li>
+            <li><a href="#services" class="hover:text-[#FFC000] transition-colors duration-200">SERVICES</a></li>
+            <li><a href="#tech-stack" class="hover:text-[#FFC000] transition-colors duration-200">TOOLKIT</a></li>
+            <li><a href="#team" class="hover:text-[#FFC000] transition-colors duration-200">TEAM</a></li>
+            <li><a href="#contact" class="hover:text-[#FFC000] transition-colors duration-200">CONTACT</a></li>
+        </ul>
+
+        <!-- Theme Toggle -->
+        <div class="flex items-center space-x-4">
+            <!-- Theme Toggle - ADDED ID for JS compatibility -->
+            <label class="theme-switch" id="theme-toggle">
+                <input type="checkbox" class="theme-switch__checkbox">
+                <div class="theme-switch__container">
+                    <div class="theme-switch__clouds"></div>
+                    <div class="theme-switch__stars-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 23.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z"
+                                fill="currentColor"></path>
+                        </svg>
+                    </div>
+                    <div class="theme-switch__circle-container">
+                        <div class="theme-switch__sun-moon-container">
+                            <div class="theme-switch__moon">
+                                <div class="theme-switch__spot"></div>
+                                <div class="theme-switch__spot"></div>
+                                <div class="theme-switch__spot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button"
+                class="md:hidden p-2 rounded-full hover:bg-white/10 transition-colors duration-200">
+                <!-- Hamburger Icon (Menu) -->
+                <svg id="icon-menu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+                <!-- Close Icon (X) -->
+                <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Dropdown (Updated background color) -->
+    <div id="mobile-menu"
+        class="hidden fixed top-20 left-3 right-3 bg-[#1e1e1e] rounded-xl shadow-2xl z-40 md:hidden p-4">
+        <ul class="flex flex-col space-y-2 list-none p-0 m-0 text-center font-medium">
+            <li><a href="#home" class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">HOME</a>
+            </li>
+            <li><a href="#projects"
+                    class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">PROJECTS</a></li>
+            <li><a href="#services"
+                    class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">SERVICES</a></li>
+            <li><a href="#tech-stack"
+                    class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">TECH STACK</a></li>
+            <li><a href="#team" class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">TEAM</a>
+            </li>
+            <li><a href="#contact"
+                    class="block py-2 rounded-lg hover:bg-white/10 transition-colors duration-200">CONTACT</a></li>
+        </ul>
+    </div>
+
+
+    <main class="max-w-8xl mx-auto px-4">
+        <!-- 1. HOME Section (Hero) -->
+        <section id="home" class="flex items-center justify-center text-center pt-24 pb-12">
+            <div class="w-full max-w-4xl p-8 rounded-2xl card-base transition-colors duration-500 shadow-xl">
+                <h1 class="text-5xl sm:text-7xl font-extrabold leading-tight mb-4">
+                    <span class="animated-gradient">Creative Minds.</span>
+                    <br>
+                    <span class="hero-gradient-text">Modern Solutions.</span>
+                </h1>
+                <p class="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
+                    EDIT X STUDIOS delivers high-impact video editing, visual design, and creative storytelling that
+                    captures attention and drives results.
+                </p>
+                <a href="#contact"
+                    class="inline-block py-3 px-8 text-lg font-bold text-white rounded-full bg-[#F74A8E] hover:bg-[#F23B7C] transition-all duration-300 shadow-lg shadow-[#F74A8E]/50">
+                    Start Your Project
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. PROJECTS Section -->
+        <section id="projects" class="py-20 pl-5 pr-5">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Featured <span class="hero-gradient-text">Projects</span>
+                <button class="filter-btn active" data-filter="all">ALL</button>
+            </h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 py-5">
+                <!-- Project Card 1: Phonk Edit -->
+                <div
+                    class="card-base p-6 rounded-xl hover:shadow-[0_0_20px_rgba(247,74,142,0.3)] transition-all duration-300">
+                    <i data-lucide="Video" class="w-10 h-10 text-[#F74A8E] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">High-Energy Phonk Edit</h3>
+                    <p class="text-gray-400 text-sm">
+                        A dynamic, rhythm-driven visual project focused on fast cuts, intense color grading, and motion
+                        graphics synched to Phonk music.
+                    </p>
+                    <a class="mt-4 text-sm text-[#FFC000] hover:text-yellow-400 cursor-pointer font-medium flex items-center filter-btn"
+                        data-filter="phonk">
+                        Watch Now <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+                <!-- Project Card 2: Corporate Storytelling -->
+                <div
+                    class="card-base p-6 rounded-xl hover:shadow-[0_0_20px_rgba(247,74,142,0.3)] transition-all duration-300">
+                    <i data-lucide="Feather" class="w-10 h-10 text-[#FFC000] mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Brand Narrative Film</h3>
+                    <p class="text-gray-400 text-sm">
+                        A clean, narrative-focused video designed to tell a company's origin story, building trust and
+                        emotional connection with the audience.
+                    </p>
+                    <a class="mt-4 text-sm text-[#FFC000] hover:text-yellow-400 cursor-pointer font-medium flex items-center filter-btn"
+                        data-filter="storytelling">
+                        Watch Now <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+                <!-- Project Card 3: Social Media Campaign -->
+                <div
+                    class="card-base p-6 rounded-xl hover:shadow-[0_0_20px_rgba(247,74,142,0.3)] transition-all duration-300">
+                    <i data-lucide="Monitor" class="w-10 h-10 text-gray-500 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">15-Second Hook Ads</h3>
+                    <p class="text-gray-400 text-sm">
+                        Series of optimized, short-form video ads tailored for Instagram Reels and TikTok, maximizing
+                        viewer retention and click-through rates.
+                    </p>
+                    <a class="mt-4 text-sm text-[#FFC000] hover:text-yellow-400 cursor-pointer font-medium flex items-center filter-btn"
+                        data-filter="campaign">
+                        Watch Now <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-grid m-5">
+                <div class="project-card" data-platform="phonk">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_1?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>Filiz Security Systems</h3>
+                        <p>https://www.filizguvenlik.com.tr</p>
+                        <span class="category-tag">E-COMMERCE</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-platform="storytelling">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_2?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>Open Digital Gallery</h3>
+                        <p>https://www.opendigitalgallery.com</p>
+                        <span class="category-tag">DUVAR POSTERLERİ</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-platform="phonk campaign">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_3?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>Istanbul Cruise Transfer</h3>
+                        <p>https://istanbulcruisetransfer.com</p>
+                        <span class="category-tag">ISTANBUL CRUISE PORT TRANSFER</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-platform="campaign">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_4?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>Tour Control Dashboard</h3>
+                        <p>https://tourcontrol.guvenlikpanel.com</p>
+                        <span class="category-tag">DASHBOARD</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-platform="storytelling">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_5?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>La-Cuisinette</h3>
+                        <p>https://www.la-cuisinette.com</p>
+                        <span class="category-tag">VEGAN PASTA</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-platform="phonk">
+                    <iframe width="100%" height="100%"
+                        src="https://www.youtube.com/embed/VIDEO_ID_6?autoplay=0&controls=0&modestbranding=1"
+                        frameborder="0" allowfullscreen></iframe>
+                    <div class="card-info">
+                        <h3>Gold Grain Organics</h3>
+                        <p>https://goldgrain.com</p>
+                        <span class="category-tag">ORGANIC FOOD</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. SERVICES Section -->
+        <section id="services" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Creative <span class="hero-gradient-text">Services</span>
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Service 1: Video Editing -->
+                <div
+                    class="card-base p-6 rounded-xl shadow-lg border-l-4 border-[#F74A8E] hover:scale-[1.02] transition-transform duration-300">
+                    <i data-lucide="Scissors" class="w-8 h-8 text-[#F74A8E] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Professional Editing</h3>
+                    <p class="text-gray-400">
+                        From raw footage to final cut, including color correction, sound design, and advanced
+                        transitions.
+                    </p>
+                </div>
+                <!-- Service 2: Motion Graphics -->
+                <div
+                    class="card-base p-6 rounded-xl shadow-lg border-l-4 border-[#FFC000] hover:scale-[1.02] transition-transform duration-300">
+                    <i data-lucide="Layers" class="w-8 h-8 text-[#FFC000] mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Motion Graphics & VFX</h3>
+                    <p class="text-gray-400">
+                        Custom animations, lower thirds, title sequences, and visual effects to make your content pop.
+                    </p>
+                </div>
+                <!-- Service 3: Concept Development -->
+                <div
+                    class="card-base p-6 rounded-xl shadow-lg border-l-4 border-gray-500 hover:scale-[1.02] transition-transform duration-300">
+                    <i data-lucide="Lightbulb" class="w-8 h-8 text-gray-400 mb-4"></i>
+                    <h3 class="text-2xl font-semibold mb-2">Concept & Strategy</h3>
+                    <p class="text-gray-400">
+                        Developing compelling video concepts and content strategies tailored for your platform and
+                        audience.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. TECH STACK (Alternative) Section -->
+        <section id="tech-stack">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Our <span class="hero-gradient-text">Creative Toolkit</span>
+            </h2>
+            <!-- Marquee Container -->
+            <div
+                class="w-full max-w-4xl mx-auto overflow-hidden relative [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]">
+                <!-- Added w-max here to ensure the container is exactly double the content width, fixing the jump -->
+                <div class="flex animate-scroll-left w-max">
+                    <!-- Tools Set 1 -->
+                    <div class="flex-shrink-0 flex items-center space-x-6 px-3">
+                        <!-- Tech Icon: Adobe Premiere Pro -->
+                        <div>
+                            <img src="Adobe_Premiere_Pro_CC_icon.svg.png" class="w-20" alt="Adobe Premiere Pro">
+                        </div>
+                        <!-- Tech Icon: Adobe After Effects -->
+                        <div>
+                            <img src="after effects.png" class="w-20" alt="Adobe After Effects">
+                        </div>
+                        <!-- Tech Icon: DaVinci Resolve -->
+                        <div>
+                            <img src="DaVinci_Resolve_Studio.png" class="w-20" alt="DaVinci Resolve">
+                        </div>
+                        <!-- Tech Icon: Photoshop -->
+                        <div>
+                            <img src="Adobe_Photoshop_CC_icon.svg.png" class="w-20" alt="Photoshop">
+                        </div>
+                        <!-- Tech Icon: CapCut -->
+                        <div>
+                            <img src="Capcut-Logo-Transparent-Free.png" class="w-20" alt="CapCut">
+                        </div>
+                        <!-- Tech Icon: Lightroom -->
+                        <div>
+                            <img src="Adobe_Photoshop_Lightroom_CC_logo.svg.png" class="w-20" alt="Lightroom">
+                        </div>
+                        <!-- Tech Icon: Filmora -->
+                        <div>
+                            <img src="Wondershare_filmora_logo.svg.png" class="w-20" alt="Filmora">
+                        </div>
+                    </div>
+                    <!-- Tools Set 2 (Duplicate for seamless scroll) -->
+                    <div class="flex-shrink-0 flex items-center space-x-6 px-3">
+                        <!-- Tech Icon: Adobe Premiere Pro -->
+                        <div>
+                            <img src="Adobe_Premiere_Pro_CC_icon.svg.png" class="w-20" alt="Adobe Premiere Pro">
+                        </div>
+                        <!-- Tech Icon: Adobe After Effects -->
+                        <div>
+                            <img src="after effects.png" class="w-20" alt="Adobe After Effects">
+                        </div>
+                        <!-- Tech Icon: DaVinci Resolve -->
+                        <div>
+                            <img src="DaVinci_Resolve_Studio.png" class="w-20" alt="">
+                        </div>
+                        <!-- Tech Icon: Photoshop -->
+                        <div>
+                            <img src="Adobe_Photoshop_CC_icon.svg.png" class="w-20" alt="">
+                        </div>
+                        <!-- Tech Icon: CapCut -->
+                        <div>
+                            <img src="Capcut-Logo-Transparent-Free.png" class="w-20" alt="">
+                        </div>
+                        <!-- Tech Icon: Lightroom -->
+                        <div>
+                            <img src="Adobe_Photoshop_Lightroom_CC_logo.svg.png" class="w-20" alt="">
+                        </div>
+                        <!-- Tech Icon: Filmora -->
+                        <div>
+                            <img src="Wondershare_filmora_logo.svg.png" class="w-20" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. TEAM Section -->
+        <section id="team" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Meet the <span class="hero-gradient-text">Studio Team</span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-2xl mx-auto">
+                <!-- Member Card 1: SUDIPTO (Phonk Edits) -->
+                <div class="team-card card-base p-6 rounded-xl text-center border-2 border-transparent hover:border-[#F74A8E] transition-all duration-300 cursor-pointer"
+                    data-link="sudipto-profile.html">
+                    <div
+                        class="w-24 h-24 rounded-full bg-[#F74A8E]/30 border-4 border-[#F74A8E] mx-auto mb-4 flex items-center justify-center">
+                        <i data-lucide="User" class="w-10 h-10 text-[#F74A8E]"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">SUDIPTO</h3>
+                    <p class="text-[#FFC000] mb-3 text-sm">PHONK EDITS | Motion Designer</p>
+                    <p class="text-gray-400 text-xs">Master of synchronization, specializing in high-intensity, visually
+                        striking music edits.</p>
+                </div>
+                <!-- Member Card 2: TAPOBRATA (Storytelling) -->
+                <div class="team-card card-base p-6 rounded-xl text-center border-2 border-transparent hover:border-[#FFC000] transition-all duration-300 cursor-pointer"
+                    data-link="tapobrata-profile.html">
+                    <div
+                        class="w-24 h-24 rounded-full bg-[#FFC000]/30 border-4 border-[#FFC000] mx-auto mb-4 flex items-center justify-center">
+                        <i data-lucide="User" class="w-10 h-10 text-[#FFC000]"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold">TAPOBRATA</h3>
+                    <p class="text-[#F74A8E] mb-3 text-sm">STORYTELLING | Narrative Director</p>
+                    <p class="text-gray-400 text-xs">Expert in crafting emotional narratives and long-form video content
+                        that resonates deeply with viewers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONTACT Section -->
+        <section id="contact" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-16">
+                Let's <span class="hero-gradient-text">Connect</span>
+            </h2>
+            <div class="max-w-xl mx-auto card-base p-8 rounded-xl shadow-2xl">
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
+                        <input type="text" id="name" name="user_name"
+                            class="w-full p-3 rounded-lg transition-colors duration-200 contact-input-dark contact-input-light"
+                            placeholder="Your Name" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                        <input type="email" id="email" name="user_email"
+                            class="w-full p-3 rounded-lg transition-colors duration-200 contact-input-dark contact-input-light"
+                            placeholder="your@email.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Project
+                            Summary</label>
+                        <textarea id="message" name="project_summary" rows="4"
+                            class="w-full p-3 rounded-lg transition-colors duration-200 contact-input-dark contact-input-light"
+                            placeholder="Tell us about your editing needs..." required></textarea>
+                    </div>
+                    <button type="submit" id="submit-button"
+                        class="w-full py-3 text-lg font-bold text-black rounded-lg bg-[#FFC000] hover:bg-yellow-400 transition-colors duration-200 shadow-md shadow-[#FFC000]/50">
+                        Send Inquiry
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!--social-attach-bar-->
+        <div class="social">
+            <a href="https://www.youtube.com/@MrStarkLordStudio"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@MrStarkLordStudio"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.youtube.com/@MrStarkLordStudio"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MrStarkLordStudio"><i class="fab fa-youtube"></i></a>
+            <a href="#home" style="top: 190%; position: fixed;"><i class="fa-solid fa-arrows-up-to-line"></i></a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <span class="animated-gradient">Edit X Studios</span>
+                </div>
+                <p class="footer-description">
+                    Elevating your digital presence with cutting-edge solutions and a commitment to excellence.
+                </p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col links-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#tech-stack">Tech Stack</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col links-col">
+                <h4 class="footer-heading">Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col contact-col">
+                <h4 class="footer-heading">Get In Touch</h4>
+                <address class="footer-contact-info">
+                    <p>123 Digital Ave, Tech City, USA 10001</p>
+                    <p>Email: <a href="mailto:info@company.com">info@company.com</a></p>
+                    <p>Phone: <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                </address>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 <span class="hero-gradient-text">EditXStudios</span>. All rights reserved.</p>
+        </div>
+    </footer>
+
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // --- Provided JS Logic Integrated and Updated for Toggle Switch ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleLabel = document.getElementById("theme-toggle");
+            const toggleInput = themeToggleLabel ? themeToggleLabel.querySelector('input[type="checkbox"]') : null;
+            const navbar = document.querySelector(".navbar");
+            const mobileMenuButton = document.getElementById("mobile-menu-button");
+            const mobileMenu = document.getElementById("mobile-menu");
+            const iconMenu = document.getElementById("icon-menu");
+            const iconClose = document.getElementById("icon-close");
+
+            // Function to set the theme classes
+            function setTheme(theme) {
+                // 1. Update Body
+                document.body.classList.remove("dark-mode", "light-mode");
+                document.body.classList.add(theme);
+
+                // 2. Update Navbar/Mobile Menu appearance
+                navbar.classList.remove("dark-mode", "light-mode");
+                navbar.classList.add(theme);
+
+                // 3. Update Toggle State (Light mode = checked)
+                if (toggleInput) {
+                    toggleInput.checked = (theme === "light-mode");
+                }
+
+                // 4. Save preference (Restoring original persistence logic)
+                localStorage.setItem("theme", theme);
+            }
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Default to dark mode
+                setTheme("dark-mode");
+            }
+
+            // --- Theme Toggle Handler ---
+            if (themeToggleLabel && toggleInput) {
+                themeToggleLabel.addEventListener("click", () => {
+                    // Use a small delay to read the correct post-click state
+                    setTimeout(() => {
+                        // If checked state is true, we are switching TO light mode
+                        const newTheme = toggleInput.checked ? "light-mode" : "dark-mode";
+                        setTheme(newTheme);
+                    }, 50);
+                });
+            }
+
+            // --- Mobile Menu Toggle Handler ---
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener("click", () => {
+                    const isHidden = mobileMenu.classList.toggle("hidden");
+                    if (isHidden) {
+                        iconMenu.classList.remove('hidden');
+                        iconClose.classList.add('hidden');
+                    } else {
+                        iconMenu.classList.add('hidden');
+                        iconClose.classList.remove('hidden');
+                    }
+                });
+            }
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.innerHTML = `<svg id="icon-menu" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>`;
+                    lucide.createIcons();
+                });
+            });
+
+            // --- Scroll Shadow Handler ---
+            window.addEventListener("scroll", () => {
+                if (navbar) {
+                    if (window.scrollY > 20) {
+                        navbar.classList.add("scrolled");
+                    } else {
+                        navbar.classList.remove("scrolled");
+                    }
+                }
+            });
+        });
+        // PROJECT stack
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const projectGrid = document.querySelector('.project-grid');
+            const projectCards = document.querySelectorAll('.project-card');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Get the category filter from the button's data attribute
+                    const filterCategory = button.getAttribute('data-filter'); // e.g., 'phonk', 'storytelling', or 'all'
+
+                    // Update active state on buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filter the project cards
+                    projectCards.forEach(card => {
+                        const platforms = card.getAttribute('data-platform'); // e.g., 'phonk', 'storytelling campaign'
+
+                        if (filterCategory === 'all') {
+                            // Show all cards when 'ALL' is selected
+                            card.classList.remove('hidden');
+                        } else if (platforms && platforms.includes(filterCategory)) {
+                            // Show cards that include the selected category
+                            card.classList.remove('hidden');
+                        } else {
+                            // Hide all other cards
+                            card.classList.add('hidden');
+                        }
+                    });
+                });
+            });
+        });
+        // TEAM CARD PAGE REDIRECT
+        document.querySelectorAll(".team-card").forEach(card => {
+            card.addEventListener("click", () => {
+                const link = card.getAttribute("data-link");
+                // For demo: we log the link instead of navigating
+                console.log('Navigating to profile link (Simulated):', link);
+            });
+        });
+
+
+
+        // 1. Initialize EmailJS with your Public Key
+        (function () {
+            emailjs.init({
+                publicKey: "jhCX3Q_-M8fnXVTAh", // <-- REPLACE THIS
+            });
+        })();
+
+        // 2. Add event listener to the form
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('contact-form');
+            const submitButton = document.getElementById('submit-button');
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Stop the browser from submitting the form traditionally
+
+                // Optional: Disable button and show loading state
+                submitButton.textContent = 'Sending...';
+                submitButton.disabled = true;
+
+                // 3. Send the form data using EmailJS
+                emailjs.sendForm('service_wgrzkib', 'template_lq0dygn', this) // <-- REPLACE THESE
+                    .then(function () {
+                        alert('SUCCESS! Your message has been sent. Thank you!');
+
+                        // Re-enable button and clear form on success
+                        submitButton.textContent = 'Send Inquiry';
+                        submitButton.disabled = false;
+                        form.reset();
+
+                    }, function (error) {
+                        alert('FAILED... Please try again or contact me directly. Error: ' + JSON.stringify(error));
+
+                        // Re-enable button on failure
+                        submitButton.textContent = 'Send Inquiry';
+                        submitButton.disabled = false;
+                    });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
